@@ -1,31 +1,33 @@
-function sleep(sec) {
-  return new Promise((wakeup) => setTimeout(wakeup, sec * 1000));
+function open(url, target, params) {
+  const w = window.open(url, target, params);
+  return {
+    window: w,
+    $: (sel) => w.document.querySelector(sel),
+    $$: (sel) => Array.from(w.document.querySelectorAll(sel)),
+    get document() {
+      return w.document;
+    },
+    get location() {
+      return w.location
+    },
+    async waitFor(sel, sec = 10) {
+      for (let i = 0; i < sec; i++) {
+        let el = this.$(sel);
+        if (el) return el;
+        await sleep(1);
+      }
+      return this.$(sel);
+    }
+  }
 }
 
-function waitFor(w, selector, sec = 10) {
-  return (
-    w.document.querySelector(selector) ||
-    new Promise((resolve) => {
-      const mo = new MutationObserver(() => {
-        const el = w.document.querySelector(selector);
-        if (el) {
-          mo.disconnect();
-          resolve(el);
-        }
-      });
-      mo.observe(w.document.body, { childList: true, subtree: true });
-      setTimeout(() => {
-        mo.disconnect();
-        resolve();
-      }, sec * 1000);
-    })
-  );
+function sleep(sec) {
+  return new Promise((wakeup) => setTimeout(wakeup, sec * 1000));
 }
 
 const AsyncFunction = async function () {}.constructor;
 
 export function runBot(code) {
-  const fn = AsyncFunction('sleep,waitFor,window,document', code);
-  const win = window.open(location.href, '_bbb');
-  return fn(sleep, waitFor, win, win.document);
+  const fn = AsyncFunction('sleep,open,main', code);
+  return fn(sleep, open, open(location.href, '_bbb'));
 }
