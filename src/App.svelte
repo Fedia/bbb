@@ -33,7 +33,7 @@ async function run() {
       <div class="err">Error at {errMsg} - see console</div>
     {/if}
   </div>
-  <textarea class="editor" bind:value={editorValue}></textarea>
+  <textarea class="editor" bind:value={editorValue} spellcheck="false"></textarea>
 </div>
 
 <style>
