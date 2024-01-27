@@ -1,7 +1,7 @@
 {
-  "name": "BBB",
-  "private": true,
-  "version": "0.0.0",
+  "name": "bbb",
+  "license": "MIT",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,5 +14,9 @@
     "prettier-plugin-svelte": "^3.1.2",
     "svelte": "^4.2.9",
     "vite": "^5.0.12"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.1",
+    "codemirror": "^6.0.1"
   }
 }

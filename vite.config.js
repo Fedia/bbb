@@ -24,6 +24,9 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
+  optimizeDeps: {
+    exclude: ["codemirror", "@codemirror", "@codemirror/language-javascript"],
+  },
 });
 
 // @see https://github.com/vitejs/vite/issues/6555#issuecomment-1342664357

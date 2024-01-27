@@ -25,7 +25,7 @@ function sleep(sec) {
   return new Promise((wakeup) => setTimeout(wakeup, sec * 1000));
 }
 
-const AsyncFunction = async function () {}.constructor;
+const AsyncFunction = async function () { }.constructor;
 
 export function runBot(code) {
   const fn = AsyncFunction('sleep,open,main', code);
